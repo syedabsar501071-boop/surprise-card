@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Surprise For You</title>
+  <style>
+    :root {
+      --bg-color: #fce4ec;
+      --card-bg: #fff0f5;
+      --primary: #880e4f;
+      --accent: #d81b60;
+      --text: #4a148c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: #ffffff;
+      border: 3px solid var(--accent);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    h1, h2 {
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #ffb2c9;
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .photo-grid {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .photo-input {
+      flex: 1;
+      text-align: center;
+    }
+
+    .photo-input label {
+      border: 1px dashed var(--accent);
+      padding: 12px 5px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--card-bg);
+      display: block;
+    }
+
+    .photo-input input[type="file"] {
+      display: none;
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary);
+    }
+
+    /* Interactive Elements */
+    .envelope {
+      width: 180px;
+      height: 120px;
+      background: var(--accent);
+      margin: 30px auto;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .letter-box {
+      background: var(--card-bg);
+      border: 1px solid #ffccd5;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .letter-title {
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .letter-body {
+      color: #333;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .preview-photos {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .preview-photos img {
+      width: 33.33%;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- SCREEN 1: FORM -->
+    <div id="screen-form">
+      <h1>Make Her Surprise</h1>
+      <p>Three photos, a few words — that's all it takes.</p>
+
+      <div class="form-group">
+        <label>Her Name</label>
+        <input type="text" id="input-her" placeholder="e.g. Macha" />
+      </div>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="input-your" placeholder="e.g. Yam" />
+      </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <textarea id="input-msg" rows="3" placeholder="Write something sweet..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Photos (Up to 3)</label>
+        <div class="photo-grid">
+          <div class="photo-input">
+            <label for="p1" id="lbl-p1">Photo 1</label>
+            <input type="file" id="p1" accept="image/*" onchange="handleImg(this, 'img1', 'lbl-p1')" />
+          </div>
+          <div class="photo-input">
+            <label for="p2" id="lbl-p2">Photo 2</label>
+            <input type="file" id="p2" accept="image/*" onchange="handleImg(this, 'img2', 'lbl-p2')" />
+          </div>
+          <div class="photo-input">
+            <label for="p3" id="lbl-p3">Photo 3</label>
+            <input type="file" id="p3" accept="image/*" onchange="handleImg(this, 'img3', 'lbl-p3')" />
+          </div>
+        </div>
+      </div>
+
+      <button onclick="previewSurprise()">PREVIEW SURPRISE →</button>
+    </div>
+
+    <!-- SCREEN 2: ENVELOPE -->
+    <div id="screen-envelope" class="hidden">
+      <h2>Happy Girlfriend's Day</h2>
+      <p>A little something, just for you</p>
+      
+      <div class="envelope" onclick="openLetter()">
+        💌 Tap to Open
+      </div>
+
+      <button style="background: #ccc; color: #333;" onclick="goBack('screen-form')">← Edit</button>
+    </div>
+
+    <!-- SCREEN 3: LETTER -->
+    <div id="screen-letter" class="hidden">
+      <div class="letter-box">
+        <div class="letter-title" id="out-title">Dear Macha,</div>
+        <div class="letter-body" id="out-msg">Your custom message will appear here.</div>
+        
+        <div class="preview-photos" id="out-photos">
+          <!-- Dynamically inserted photos -->
+        </div>
+
+        <div style="margin-top: 15px; text-align: right; font-weight: bold; color: var(--accent);" id="out-sender">
+          — Yam
+        </div>
+      </div>
+
+      <button onclick="goBack('screen-envelope')">← Back to Envelope</button>
+    </div>
+  </div>
+
+  <script>
+    const images = { img1: '', img2: '', img3: '' };
+
+    function handleImg(input, key, labelId) {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          images[key] = e.target.result;
+          document.getElementById(labelId).innerText = "✓ Uploaded";
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function previewSurprise() {
+      const herName = document.getElementById('input-her').value || 'Macha';
+      const yourName = document.getElementById('input-your').value || 'Yam';
+      const msg = document.getElementById('input-msg').value || 'Happy Girlfriend\'s Day, my love. Every moment with you is my favorite.';
+
+      document.getElementById('out-title').innerText = `Dear ${herName},`;
+      document.getElementById('out-msg').innerText = msg;
+      document.getElementById('out-sender').innerText = `— ${yourName}`;
+
+      const photoContainer = document.getElementById('out-photos');
+      photoContainer.innerHTML = '';
+      
+      ['img1', 'img2', 'img3'].forEach(k => {
+        if (images[k]) {
+          const imgEl = document.createElement('img');
+          imgEl.src = images[k];
+          photoContainer.appendChild(imgEl);
+        }
+      });
+
+      document.getElementById('screen-form').classList.add('hidden');
+      document.getElementById('screen-envelope').classList.remove('hidden');
+    }
+
+    function openLetter() {
+      document.getElementById('screen-envelope').classList.add('hidden');
+      document.getElementById('screen-letter').classList.remove('hidden');
+    }
+
+    function goBack(targetScreenId) {
+      document.getElementById('screen-envelope').classList.add('hidden');
+      document.getElementById('screen-letter').classList.add('hidden');
+      document.getElementById(targetScreenId).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
