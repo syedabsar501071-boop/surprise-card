@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Special Surprise For You ❤️</title>
+  <style>
+    :root {
+      --bg-color: #fce4ec;
+      --card-bg: #fff0f5;
+      --primary: #880e4f;
+      --accent: #d81b60;
+      --text: #4a148c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating Hearts Animation */
+    .heart-particle {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      color: rgba(216, 27, 96, 0.6);
+      animation: floatUp 6s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-105vh) scale(1.3) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Music Toggle Button */
+    .music-btn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      z-index: 100;
+      background: #ffffff;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border: 3px solid var(--accent);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    h1, h2 {
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Buttons */
+    .btn {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3);
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      box-shadow: none;
+    }
+
+    /* Scene 1: Welcome */
+    .welcome-heart {
+      font-size: 60px;
+      margin: 20px 0;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    /* Scene 2: Interactive Letter */
+    .letter-box {
+      background: var(--card-bg);
+      border: 2px dashed var(--accent);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      font-style: italic;
+      color: var(--primary);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* Scene 3: Reasons Tap Cards */
+    .reasons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .reason-card {
+      background: var(--card-bg);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 15px 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--primary);
+      transition: all 0.3s ease;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .reason-card.revealed {
+      background: #fff;
+      font-weight: normal;
+      font-size: 13px;
+      color: #333;
+    }
+
+    /* Navigation row */
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Music Toggle -->
+  <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🎵</button>
+
+  <!-- Background Music Track -->
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Container -->
+  <div class="container">
+
+    <!-- SCENE 1: Welcome / Cover -->
+    <div id="scene-welcome">
+      <h1>A Little Surprise ❤️</h1>
+      <p>I created something special just for you. Tap below to turn on the music and open it up!</p>
+      <div class="welcome-heart">💌</div>
+      <button class="btn" onclick="startExperience()">Start Surprise ✨</button>
+    </div>
+
+    <!-- SCENE 2: The Love Letter -->
+    <div id="scene-letter" class="hidden">
+      <h2>For My Favorite Person 🌹</h2>
+      <div class="letter-box">
+        <p>"Just a small gentle reminder of how much you mean to me. Every moment with you makes life brighter, warmer, and so much sweeter. Thank you for being you!"</p>
+      </div>
+      <button class="btn" onclick="showScene('scene-reasons')">Next: Reasons I Love You ❤️</button>
+    </div>
+
+    <!-- SCENE 3: Interactive Reasons -->
+    <div id="scene-reasons" class="hidden">
+      <h2>Tap each card! 🎁</h2>
+      <p>Tap on any card to reveal a special note:</p>
+
+      <div class="reasons-grid">
+        <div class="reason-card" onclick="revealReason(this, 'Your beautiful smile that brightens my day 😊')">🎁 Tap me!</div>
+        <div class="reason-card" onclick="revealReason(this, 'How sweet and caring you are ❤️')">🎁 Tap me!</div>
+        <div class="reason-card" onclick="revealReason(this, 'The awesome memories we share 📸')">🎁 Tap me!</div>
+        <div class="reason-card" onclick="revealReason(this, 'You simply make everything better ✨')">🎁 Tap me!</div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="showScene('scene-letter')">← Back</button>
+        <button class="btn" onclick="showScene('scene-final')">Final Note ❤️</button>
+      </div>
+    </div>
+
+    <!-- SCENE 4: Final Screen -->
+    <div id="scene-final" class="hidden">
+      <div class="welcome-heart">💖</div>
+      <h2>Always & Forever</h2>
+      <p>Hope this brought a tiny smile to your face today!</p>
+      <button class="btn btn-secondary" onclick="showScene('scene-welcome')">🔄 Replay Surprise</button>
+    </div>
+
+  </div>
+
+  <script>
+    const music = document.getElementById('bg-music');
+    let isPlaying = false;
+
+    // Start experience & play music automatically
+    function startExperience() {
+      music.play().then(() => {
+        isPlaying = true;
+      }).catch(err => {
+        console.log("Autoplay prevented:", err);
+      });
+      showScene('scene-letter');
+    }
+
+    // Toggle Music manually
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause();
+        isPlaying = false;
+        document.getElementById('musicToggle').innerText = '🔇';
+      } else {
+        music.play();
+        isPlaying = true;
+        document.getElementById('musicToggle').innerText = '🎵';
+      }
+    }
+
+    // Scene Navigation Logic
+    function showScene(sceneId) {
+      const scenes = ['scene-welcome', 'scene-letter', 'scene-reasons', 'scene-final'];
+      scenes.forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(sceneId).classList.remove('hidden');
+    }
+
+    // Reveal Reason Cards
+    function revealReason(element, text) {
+      element.innerText = text;
+      element.classList.add('revealed');
+    }
+
+    // Create Floating Hearts Continuous Effect
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      heart.innerText = ['❤️', '💖', '💕', '🌸', '✨'][Math.floor(Math.random() * 5)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+
+    setInterval(createHeart, 500);
+  </script>
+</body>
+  </html>
+
